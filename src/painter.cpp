@@ -159,6 +159,7 @@ void MaZe_Painter::setupUi(QMainWindow *paint_window) {
 
     menubar->addAction(menuFiles->menuAction());
     menubar->addAction(menuView->menuAction());
+    menuFiles->addAction(tr("Save As..."), this, &MaZe_Painter::saveAs);
 
     retranslateUi(paint_window);
 
@@ -241,5 +242,22 @@ void MaZe_Painter::handleColors(QAbstractButton* init) {
     }
     else if (init == color_green_button){
         sheet->setColor(0, 255, 0);
+    }
+}
+
+void MaZe_Painter::saveAs() {
+
+    QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Save Image"), "", tr("Images (*.png *.jpg *.bmp)"));
+    
+    if (!fileName.isEmpty()) {
+        QSize size = sheet->size();
+
+        QImage image(size, QImage::Format_ARGB32);
+
+        sheet->makeCurrent();
+        glReadPixels(0, 0, size.width(), size.height(), GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+
+        image = image.mirrored(false, true);
+        image.save(fileName);
     }
 }

@@ -16,6 +16,9 @@
 #include <QButtonGroup>
 #include <iostream>
 #include "opengl.hpp"
+#include <QFileDialog>
+#include <QString>
+
 
 class MaZe_Painter : public QObject {
     Q_OBJECT
@@ -49,6 +52,10 @@ class MaZe_Painter : public QObject {
         void retranslateUi(QMainWindow *);
         void handleButtons(QAbstractButton*);
         void handleColors(QAbstractButton*);
+
+    public slots:
+        void saveAs();
+
 };
 
 #endif // PAINTER_HPP
