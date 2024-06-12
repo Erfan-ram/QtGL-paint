@@ -1,13 +1,14 @@
 #include "painter.hpp"
 #include <QButtonGroup>
 
-MaZe_Painter::MaZe_Painter() {
+Painter_app::Painter_app() {
 }
 
-void MaZe_Painter::setupUi(QMainWindow *paint_window) {
+void Painter_app::setupUi(QMainWindow *paint_window) {
     if (paint_window->objectName().isEmpty())
         paint_window->setObjectName(QString::fromUtf8("paint_window"));
-    paint_window->setFixedSize(780, 500);
+    paint_window->setFixedSize(1000, 800);
+    // paint_window->setStyleSheet("background-color: rgb(255, 255, 255);");
 
     QPalette palette;
     QBrush brush(QColor(255, 255, 255, 255));
@@ -51,7 +52,7 @@ void MaZe_Painter::setupUi(QMainWindow *paint_window) {
 
     shapes_group = new QGroupBox(centralwidget);
     shapes_group->setObjectName(QString::fromUtf8("shapes_group"));
-    shapes_group->setGeometry(QRect(10, 10, 101, 153));
+    shapes_group->setGeometry(QRect(850, 10, 101, 153));
 
     point_button = new QPushButton(shapes_group);
     point_button->setObjectName(QString::fromUtf8("point_button"));
@@ -67,6 +68,9 @@ void MaZe_Painter::setupUi(QMainWindow *paint_window) {
     circle_button->setObjectName(QString::fromUtf8("circle_button"));
     circle_button->setGeometry(QRect(10, 90, 81, 27));
     circle_button->setCheckable(true);
+    QIcon buttonIcon("/home/erfan/Desktop/TA/graphic/final/QtGL-paint/icons/cir.png");
+    circle_button->setIcon(buttonIcon);
+    circle_button->setIconSize(QSize(10, 10));
 
     rectangle_button = new QPushButton(shapes_group);
     rectangle_button->setObjectName(QString::fromUtf8("rectangle_button"));
@@ -75,7 +79,7 @@ void MaZe_Painter::setupUi(QMainWindow *paint_window) {
 
     tools_group = new QGroupBox(centralwidget);
     tools_group->setObjectName(QString::fromUtf8("tools_group"));
-    tools_group->setGeometry(QRect(10, 170, 101, 141));
+    tools_group->setGeometry(QRect(10, 10, 101, 110));
 
     eraser_button = new QPushButton(tools_group);
     eraser_button->setObjectName(QString::fromUtf8("eraser_button"));
@@ -133,7 +137,7 @@ void MaZe_Painter::setupUi(QMainWindow *paint_window) {
     sheet = new GLWidget(centralwidget);
     sheet->setObjectName(QString::fromUtf8("sheet"));
     sheet->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-    sheet->setGeometry(QRect(120, 0, 640, 480));
+    sheet->setGeometry(QRect(120, 0, 700, 750));
 
     paint_window->setCentralWidget(centralwidget);
 
@@ -159,7 +163,7 @@ void MaZe_Painter::setupUi(QMainWindow *paint_window) {
 
     menubar->addAction(menuFiles->menuAction());
     menubar->addAction(menuView->menuAction());
-    menuFiles->addAction(tr("Save As..."), this, &MaZe_Painter::saveAs);
+    menuFiles->addAction(tr("Save As..."), this, &Painter_app::saveAs);
 
     retranslateUi(paint_window);
 
@@ -174,7 +178,7 @@ void MaZe_Painter::setupUi(QMainWindow *paint_window) {
     button_group->addButton(eraser_button);
     button_group->addButton(clear_all);
     connect(button_group, QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked),
-            this, &MaZe_Painter::handleButtons);
+            this, &Painter_app::handleButtons);
             
     QButtonGroup* button_group2 = new QButtonGroup(this);
     button_group2->setExclusive(true);
@@ -185,10 +189,12 @@ void MaZe_Painter::setupUi(QMainWindow *paint_window) {
     button_group2->addButton(color_black_button);
     button_group2->addButton(color_yellow_button);
     connect(button_group2, QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked),
-            this, &MaZe_Painter::handleColors);
+            this, &Painter_app::handleColors);
+
+    paint_window->setStyleSheet("background-color: rgb(255, 255, 255);");
 }
 
-void MaZe_Painter::retranslateUi(QMainWindow *paint_window) {
+void Painter_app::retranslateUi(QMainWindow *paint_window) {
     paint_window->setWindowTitle(QCoreApplication::translate("paint_window", "MaZe Painter", nullptr));
     shapes_group->setTitle(QCoreApplication::translate("paint_window", "        Shapes", nullptr));
     color_group->setTitle(QCoreApplication::translate("paint_window", "     Color Box", nullptr));
@@ -203,7 +209,7 @@ void MaZe_Painter::retranslateUi(QMainWindow *paint_window) {
     menuView->setTitle(QCoreApplication::translate("paint_window", "View", nullptr));
 }
 
-void MaZe_Painter::handleButtons(QAbstractButton* init) {
+void Painter_app::handleButtons(QAbstractButton* init) {
     if (init == point_button){
         sheet->setPaintFlag("point");
     }
@@ -224,7 +230,7 @@ void MaZe_Painter::handleButtons(QAbstractButton* init) {
     }
 }
 
-void MaZe_Painter::handleColors(QAbstractButton* init) {
+void Painter_app::handleColors(QAbstractButton* init) {
     if (init == color_purple_button){
         sheet->setColor(128, 0, 128);
     }
@@ -245,7 +251,7 @@ void MaZe_Painter::handleColors(QAbstractButton* init) {
     }
 }
 
-void MaZe_Painter::saveAs() {
+void Painter_app::saveAs() {
 
     QString fileName = QFileDialog::getSaveFileName(nullptr, tr("Save Image"), "", tr("Images (*.png *.jpg *.bmp)"));
     

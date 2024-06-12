@@ -5,7 +5,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     
     QMainWindow paintWindow;
-    MaZe_Painter ui;
+    Painter_app ui;
     ui.setupUi(&paintWindow);
 
     paintWindow.show();

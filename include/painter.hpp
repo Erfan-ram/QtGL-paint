@@ -18,9 +18,13 @@
 #include "opengl.hpp"
 #include <QFileDialog>
 #include <QString>
+#include <QIcon>
+// #include <QtWidgets/QIcon>
+#include <QMessageBox>
+#include <QGridLayout>
 
 
-class MaZe_Painter : public QObject {
+class Painter_app : public QObject {
     Q_OBJECT
     private :
         QWidget *centralwidget;
@@ -46,7 +50,7 @@ class MaZe_Painter : public QObject {
         GLWidget* sheet;
 
     public :
-        MaZe_Painter();
+        Painter_app();
         void updateSheet();
         void setupUi(QMainWindow *);
         void retranslateUi(QMainWindow *);
