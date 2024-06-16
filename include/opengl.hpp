@@ -39,9 +39,7 @@ class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
         std::string paintFlag = "None";
         std::vector<QPoint> currentPoint;
         QColor currentColor = QColor(0, 0, 0);
-    
-    bool isPointInsideCircle(const QPoint& point, const Shape& shape);
-    bool isPointInsideRectangle(const QPoint& point, const Shape& shape);
+
 };
 
 #endif // OPENGL_HPP

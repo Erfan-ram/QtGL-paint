@@ -58,24 +58,33 @@ void Painter_app::setupUi(QMainWindow *paint_window) {
     point_button->setObjectName(QString::fromUtf8("point_button"));
     point_button->setGeometry(QRect(10, 30, 81, 27));
     point_button->setCheckable(true);
+    QIcon buttonIcon("/home/erfan/Desktop/TA/graphic/final/QtGL-paint/icons/point.png");
+    point_button->setIcon(buttonIcon);
+    point_button->setIconSize(QSize(10, 10));
 
     line_button = new QPushButton(shapes_group);
     line_button->setObjectName(QString::fromUtf8("line_button"));
     line_button->setGeometry(QRect(10, 60, 81, 27));
     line_button->setCheckable(true);
+    QIcon buttonIcon1("/home/erfan/Desktop/TA/graphic/final/QtGL-paint/icons/line.jpg");
+    line_button->setIcon(buttonIcon1);
+    line_button->setIconSize(QSize(40, 40));
 
     circle_button = new QPushButton(shapes_group);
     circle_button->setObjectName(QString::fromUtf8("circle_button"));
     circle_button->setGeometry(QRect(10, 90, 81, 27));
     circle_button->setCheckable(true);
-    QIcon buttonIcon("/home/erfan/Desktop/TA/graphic/final/QtGL-paint/icons/cir.png");
-    circle_button->setIcon(buttonIcon);
-    circle_button->setIconSize(QSize(10, 10));
+    QIcon buttonIcon2("/home/erfan/Desktop/TA/graphic/final/QtGL-paint/icons/cir.png");
+    circle_button->setIcon(buttonIcon2);
+    circle_button->setIconSize(QSize(20, 20));
 
     rectangle_button = new QPushButton(shapes_group);
     rectangle_button->setObjectName(QString::fromUtf8("rectangle_button"));
     rectangle_button->setGeometry(QRect(10, 120, 81, 27));
     rectangle_button->setCheckable(true);
+    QIcon buttonIcon3("/home/erfan/Desktop/TA/graphic/final/QtGL-paint/icons/squ.jpg");
+    rectangle_button->setIcon(buttonIcon3);
+    rectangle_button->setIconSize(QSize(20, 20));
 
     tools_group = new QGroupBox(centralwidget);
     tools_group->setObjectName(QString::fromUtf8("tools_group"));
@@ -198,10 +207,10 @@ void Painter_app::retranslateUi(QMainWindow *paint_window) {
     paint_window->setWindowTitle(QCoreApplication::translate("paint_window", "MaZe Painter", nullptr));
     shapes_group->setTitle(QCoreApplication::translate("paint_window", "        Shapes", nullptr));
     color_group->setTitle(QCoreApplication::translate("paint_window", "     Color Box", nullptr));
-    point_button->setText(QCoreApplication::translate("paint_window", "Point", nullptr));
-    line_button->setText(QCoreApplication::translate("paint_window", "Line", nullptr));
-    circle_button->setText(QCoreApplication::translate("paint_window", "Circle", nullptr));
-    rectangle_button->setText(QCoreApplication::translate("paint_window", "Rectangle", nullptr));
+    point_button->setText(QCoreApplication::translate("paint_window", "", nullptr));
+    line_button->setText(QCoreApplication::translate("paint_window", "", nullptr));
+    circle_button->setText(QCoreApplication::translate("paint_window", "", nullptr));
+    rectangle_button->setText(QCoreApplication::translate("paint_window", "", nullptr));
     tools_group->setTitle(QCoreApplication::translate("paint_window", "         Tools ", nullptr));
     eraser_button->setText(QCoreApplication::translate("paint_window", "Eraser", nullptr));
     clear_all->setText(QCoreApplication::translate("paint_window", "Clear All", nullptr));

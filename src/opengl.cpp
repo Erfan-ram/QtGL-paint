@@ -54,6 +54,12 @@ void GLWidget::paintGL() {
             glBegin(GL_POINTS);
             glVertex3f(shape.points[0].x(), shape.points[0].y(), 0.0);
             glEnd();
+        
+        } else if (shape.type == "ershape") {
+            glPointSize(10.0f);
+            glBegin(GL_POINTS);
+            glVertex3f(shape.points[0].x(), shape.points[0].y(), 0.0);
+            glEnd();
         }
     }
 
@@ -102,32 +108,13 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && paintFlag != "None") {
         if (paintFlag == "erase") {
             QPoint clickPos = event->pos();
-            auto it = std::remove_if(shapes.begin(), shapes.end(), [&](const Shape& shape) {
-                if (shape.type == "line") {
-                    QPointF p1 = shape.points[0];
-                    QPointF p2 = shape.points[1];
-                    QPointF v = p2 - p1;
-                    QPointF w = clickPos - p1;
-                    double t = QPointF::dotProduct(w, v) / QPointF::dotProduct(v, v);
-                    if (t < 0.0 || t > 1.0) {
-                        return false;
-                    }
-                    QPointF projection = p1 + t * v;
-                    double dist = QLineF(clickPos, projection).length();
-                    return dist < 5.0;
-                } else if (shape.type == "point") {
-                    return shape.points[0] == clickPos;
-                } else if (shape.type == "rectangle") {
-                    return isPointInsideRectangle(clickPos, shape);
-                } else if (shape.type == "circle") {
-                    return isPointInsideCircle(clickPos, shape);
-                }
-                return false;
-            });
-            shapes.erase(it, shapes.end());
+            Shape shape;
+            shape.type = "ershape";
+            shape.points.push_back(clickPos);
+            shape.color = QColor(255, 255, 255);
+            shapes.push_back(shape);
             update();
-        } 
-        else {
+        } else {
             currentPoint.clear();
             currentPoint.push_back(event->pos());
             if (paintFlag == "point") {
@@ -138,8 +125,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
                 shapes.push_back(shape);
                 currentPoint.clear();
                 update();
-            } 
-            else {
+            } else {
                 currentPoint.push_back(event->pos());
             }
         }
@@ -163,17 +149,4 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event) {
         currentPoint.clear();
         update();
     }
-}
-
-bool GLWidget::isPointInsideCircle(const QPoint& point, const Shape& shape) {
-    if (shape.type != "circle") return false;
-    float radius = std::hypot(shape.points[1].x() - shape.points[0].x(), shape.points[1].y() - shape.points[0].y());
-    float distance = std::hypot(point.x() - shape.points[0].x(), point.y() - shape.points[0].y());
-    return distance <= radius;
-}
-
-bool GLWidget::isPointInsideRectangle(const QPoint& point, const Shape& shape) {
-    if (shape.type != "rectangle") return false;
-    return (point.x() >= shape.points[0].x() && point.x() <= shape.points[1].x() &&
-            point.y() >= shape.points[0].y() && point.y() <= shape.points[1].y());
 }
